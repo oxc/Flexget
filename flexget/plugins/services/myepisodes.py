@@ -211,9 +211,8 @@ class MyEpisodes(object):
             search_value = entry['tvdb_series_name']
         else:
             try:
-                series = plugin.get_plugin_by_name('api_tvdb').instance.lookup_series(
-                    name=entry['series_name'], tvdb_id=entry.get('tvdb_id'))
-                search_value = series.name
+                plugin.get_plugin_by_name('thetvdb_lookup').instance.lazy_series_lookup(entry, 'en')
+                search_value = entry['tvdb_series_name']
             except LookupError:
                 log.warning('Unable to lookup series `%s` from tvdb, using raw name.', entry['series_name'])
 
